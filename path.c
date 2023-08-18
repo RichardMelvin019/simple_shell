@@ -9,9 +9,10 @@
 char *path(char *command)
 {
 	char *location, *location_copy;
-	int cmd_len, int dir_length;
+	int cmd_len, dir_length;
 	char *location_token, *file_location;
 	const char *delim = ":";
+	struct stat buffer;
 
 	location = getenv("PATH");
 	if (location)
@@ -28,7 +29,28 @@ char *path(char *command)
 			strcat(file_location, "/");
 			strcat(file_location, command);
 			strcat(file_location, "\0");
+
+			if (stat(file_location, &buffer) == 0)
+			{
+				free(location_copy);
+				return (file_location);
+			}
+			else
+			{
+				free(file_location);
+				location_token = strtok(NULL, delim);
+			}
 		}
+		free(location_copy);
+
+		if (stat(command, &buffer) == 0)
+		{
+			return (command);
+		}
+
+		return (NULL);
 	}
+
+	return (NULL);
 
 }
