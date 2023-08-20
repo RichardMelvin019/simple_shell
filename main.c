@@ -19,11 +19,11 @@ int main(int argc, char *argv[])
 	(void)argc;
 	while(1)
 	{
-		printf("%s", prompt);
+		write(STDOUT_FILENO, prompt, 13);
 		end_of_line = getline(&lineptr, &n, stdin);
 		if (end_of_line == -1)
 		{
-			printf("\nShell exit\n");
+			perror("\nShell exit");
 			return (-1);
 		}
 		lineptr_new = malloc(sizeof(char) * end_of_line);

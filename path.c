@@ -9,7 +9,7 @@
 char *path(char *command)
 {
 	char *location, *location_copy;
-	int cmd_len, int dir_length;
+	int cmd_len, dir_length;
 	char *location_token, *file_location;
 	const char *delim = ":";
 
@@ -30,5 +30,5 @@ char *path(char *command)
 			strcat(file_location, "\0");
 		}
 	}
-
+	return (0);
 }
