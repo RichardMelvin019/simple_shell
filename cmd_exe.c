@@ -7,7 +7,7 @@
 */
 
 int cmd_exe(char **argv, char **env, char *lineptr,
-	char *lineptr_new, char *filename, char *command)
+	char *lineptr_new, char *filename, char *command, int loop_count)
 {
 	pid_t pid;
 	int execve_num;
@@ -36,7 +36,7 @@ int cmd_exe(char **argv, char **env, char *lineptr,
 			wait(0);
 	}
 	else
-		perror(filename);
+		get_path_error(filename, argv, lineptr_new, lineptr, loop_count);
 	return (0);
 }
 
@@ -46,5 +46,17 @@ int memory_free(char *lineptr, char *lineptr_new, char **argv)
 	free(lineptr_new);
 	free(lineptr);
 
+	return (0);
+}
+
+int get_path_error(char *filename, char **argv, char *lineptr_new, char *lineptr, int loop_count)
+{
+	_printf("%s: %d: %s: not found\n", filename, loop_count, argv[0]);
+	if (issatty(STDIN_FILENO) == 0)
+	{
+		memory_free(lineptr, lineptr_new, argv);
+		exit(127);
+	}
+	memory_free(lineptr, lineptr_new, argv);
 	return (0);
 }

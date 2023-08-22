@@ -6,7 +6,7 @@
  * @lineptr: lineptr
  * Return: integer
 */
-int process_line(char *lineptr, char **argv, char **env, char *filename, char *command_path)
+int process_line(char *lineptr, char **argv, char **env, char *filename, char *cmd_location)
 {
 	char *lineptr_new = NULL;
 	int count_token = 0;
@@ -29,8 +29,9 @@ int process_line(char *lineptr, char **argv, char **env, char *filename, char *c
 			cmd_exe(argv, env, lineptr, lineptr_new, filename, argv[0]);
 		else
 		{
-			get_path();
-			cmd_exe(argv, env, lineptr, lineptr_new, filename, command_path);
+			get_path(&cmd_location, argv, lineptr_new, lineptr);
+			cmd_exe(argv, env, lineptr, lineptr_new, filename, cmd_location);
+			free(cmd_location);
 		}
 	}
 	return (0);

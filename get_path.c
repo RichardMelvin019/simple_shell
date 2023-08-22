@@ -6,41 +6,42 @@
  * Return: character pointer
 */
 
-char *get_path()
+int get_path(char **cmd_location, char **argv, char *lineptr_new, char *lineptr)
 {
 	char *location = NULL;
 	char *location_copy = NULL;
 	char *location_token = NULL;
+	char delim = ":";
 
-	location = getenv("PATH");
-	if (location)
+	location = _getenv("PATH");
+	if (location == NULL)
+		get_path_error(filename, argv, lineptr_new, lineptr, loop_count);
+	
+	location_copy = _strdup(location);
+	if (location_copy == NULL)
 	{
-		location_copy = _strdup(location);
-		cmd_len = _strlen(command);
-		location_token = strtok(location_copy, delim);
-		while (location_token != NULL)
-		{
-			dir_length = _strlen(location_token);
-			file_location = malloc(dir_length + cmd_len + 2);
-			_strcpy(file_location, location_token);
-			_strcat(file_location, "/");
-			_strcat(file_location, command);
-			_strcat(file_location, "\0");
-			if (stat(file_location, &buffer) == 0)
-			{
-				free(location_copy);
-				return (file_location);
-			}
-			else
-			{
-				free(file_location);
-				location_token = strtok(NULL, delim);
-			}
-		}
-		free(location_copy);
-		if (stat(command, &buffer) == 0)
-			return (command);
-		return (NULL);
+		exit(EXIT_FAILURE);
 	}
-	return (NULL);
+	location_token = strtok(location_copy, delim);
+	while (location_token != NULL)
+	{
+		free(*cmd_location);
+		*cmd_location == NULL;
+		*cmd_location == (char *)malloc(_strlen(location_token) + _strlen(argv[0]) + 2);
+		if (*cmd_location == NULL)
+		{
+			free(location_tokencopy);
+			memory_free(lineptr, lineptr_new, argv);
+			exit(EXIT_FAILURE);
+		}
+		_strcpy(cmd_location, location_token);
+		_strcat(cmd_location, "/");
+		_strcat(cmd_location, argv[0]);
+		_strcat(cmd_location, "\0");
+		if (access(*cmd_location, F_OK) == 0)
+			break;
+		location_token = strtok(NULL, delim);
+	}
+	free(location_copy);
+	return (0);
 }

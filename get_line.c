@@ -13,7 +13,7 @@ int get_line(char **env, char *filename)
 	{
 		char *lineptr = NULL;
 		char **argv = NULL;
-		char *command_path = NULL;
+		char *cmd_location = NULL;
 		size_t buff_size = 0;
 		ssize_t num_read = 0;
 
@@ -29,7 +29,7 @@ int get_line(char **env, char *filename)
 		}
 		else
 		{
-			process_line(lineptr, argv, env, filename, command_path);
+			process_line(lineptr, argv, env, filename, cmd_location);
 		}
 	}
 	return (0);
