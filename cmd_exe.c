@@ -6,19 +6,45 @@
  * Return: void
 */
 
-void cmd_exe(char *argv[])
+int cmd_exe(char **argv, char **env, char *lineptr,
+	char *lineptr_new, char *filename, char *command)
 {
-	char *command = NULL, *path_command;
+	pid_t pid;
+	int execve_num;
 
-	if (argv != NULL)
+	if (access(command, F_OK) != -1)
 	{
-		command = argv[0];
-
-		path_command = path(command);
-
-		if (execve(path_command, argv, NULL) == -1)
+		pid = fork();
+		if (pid == -1)
 		{
-			perror("Error");
+			perror(filename);
+			memory_free(lineptr, lineptr_new, argv);
+			exit(EXIT_FAILURE);
 		}
+		else if (pid == 0)
+		{
+			execve_num = execve(command, argv, env);
+			if (execve_num == -1)
+			{
+				perror(filename);
+				memory_free(lineptr, lineptr_new, argv);
+			}
+			else
+				memory_free(lineptr, lineptr_new, argv);
+		}
+		else
+			wait(0);
 	}
+	else
+		perror(filename);
+	return (0);
+}
+
+int memory_free(char *lineptr, char *lineptr_new, char **argv)
+{
+	free(argv);
+	free(lineptr_new);
+	free(lineptr);
+
+	return (0);
 }

@@ -6,12 +6,11 @@
  * Return: character pointer
 */
 
-char *path(char *command)
+char *get_path()
 {
-	char *location, *location_copy, *location_token, *file_location;
-	int cmd_len, dir_length;
-	const char *delim = ":";
-	struct stat buffer;
+	char *location = NULL;
+	char *location_copy = NULL;
+	char *location_token = NULL;
 
 	location = getenv("PATH");
 	if (location)
