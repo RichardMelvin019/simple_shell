@@ -15,7 +15,7 @@ void cmd_exe(char *argv[])
 		command = argv[0];
 
 		path_command = path(command);
-	
+
 		if (execve(path_command, argv, NULL) == -1)
 		{
 			perror("Error");
