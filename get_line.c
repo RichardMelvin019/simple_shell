@@ -8,7 +8,7 @@
 
 int get_line(char *filename)
 {
-	char *prompt = "(SMshell) $ ";
+	char *prompt = "$ ";
 	int loop_count = 0;
 
 	while (1)
@@ -21,7 +21,7 @@ int get_line(char *filename)
 
 		loop_count++;
 		if (isatty(STDIN_FILENO) != 0)
-			write(STDOUT_FILENO, prompt, 13);
+			write(STDOUT_FILENO, prompt, 3);
 		num_read = getline(&lineptr, &buff_size, stdin);
 		if (num_read == -1 || num_read == 0)
 			check_getline(lineptr, buff_size);
