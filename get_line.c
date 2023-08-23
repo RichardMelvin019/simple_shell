@@ -38,7 +38,7 @@ int get_line(char *filename)
 		{ memory_free(lineptr, lineptr_new, argv);
 			exit(EXIT_SUCCESS);
 		}
-		else if (_strncmp(lineptr, "env", 4) == 0)
+		else if (num_read == 4 && _strncmp(lineptr, "env", 4) == 0)
 		{ print_environ();
 			free(lineptr);
 		}
