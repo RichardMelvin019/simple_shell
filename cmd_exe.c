@@ -17,12 +17,13 @@ int cmd_exe(char **argv, char *lineptr,
 	pid_t pid;
 	int execve_num;
 
-	if (access(command, F_OK) != -1)
+	if (access(command, F_OK) != -1 && _getenv("PATH1") == NULL)
 	{
 		pid = fork();
 		if (pid == -1)
 		{
 			perror(filename);
+			free(command);
 			memory_free(lineptr, lineptr_new, argv);
 			exit(EXIT_FAILURE);
 		}
@@ -38,7 +39,7 @@ int cmd_exe(char **argv, char *lineptr,
 				memory_free(lineptr, lineptr_new, argv);
 		}
 		else
-			wait(0);
+			handle_wait(lineptr, lineptr_new, argv);
 	}
 	else
 		get_path_error(filename, argv, lineptr_new, lineptr, loop_count);
@@ -82,5 +83,29 @@ int get_path_error(char *filename, char **argv, char *lineptr_new,
 		exit(127);
 	}
 	memory_free(lineptr, lineptr_new, argv);
+	return (0);
+}
+
+/**
+ * handle_wait - handle
+ * @lineptr: lineptr
+ * @lineptr_new: lineptr
+ * @argv: argv
+ * Return: integer
+*/
+int handle_wait(char *lineptr, char *lineptr_new, char **argv)
+{
+	int status = 0;
+
+	wait(&status);
+	if (WIFEXITED(status))
+		WEXITSTATUS(status);
+	if (status != 0 && isatty(STDIN_FILENO) == 0)
+	{
+		memory_free(lineptr, lineptr_new, argv);
+		exit(2);
+	}
+	else
+		memory_free(lineptr, lineptr_new, argv);
 	return (0);
 }

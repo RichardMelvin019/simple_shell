@@ -58,6 +58,7 @@ int _strncmp(const char *s1, const char *s2, size_t n);
 char *_getenv(const char *env_name);
 char *_strchr(const char *s, int c);
 int print_environ(void);
+int handle_wait(char *lineptr, char *lineptr_new, char **argv);
 
 
 #endif
