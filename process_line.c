@@ -2,11 +2,15 @@
 
 /**
  * process_line - processes line
- * @num_read: number read
  * @lineptr: lineptr
+ * @argv: argument vector
+ * @filename: filename
+ * @cmd_location: command location
+ * @loop_count: loop count
  * Return: integer
 */
-int process_line(char *lineptr, char **argv, char **env, char *filename, char *cmd_location)
+int process_line(char *lineptr, char **argv,
+	char *filename, char *cmd_location, int loop_count)
 {
 	char *lineptr_new = NULL;
 	int count_token = 0;
@@ -26,11 +30,11 @@ int process_line(char *lineptr, char **argv, char **env, char *filename, char *c
 	if (count_token > 0)
 	{
 		if (access(argv[0], F_OK) == 0)
-			cmd_exe(argv, env, lineptr, lineptr_new, filename, argv[0]);
+			cmd_exe(argv, lineptr, lineptr_new, filename, argv[0], loop_count);
 		else
 		{
-			get_path(&cmd_location, argv, lineptr_new, lineptr);
-			cmd_exe(argv, env, lineptr, lineptr_new, filename, cmd_location);
+			get_path(&cmd_location, argv, lineptr_new, lineptr, filename, loop_count);
+			cmd_exe(argv, lineptr, lineptr_new, filename, cmd_location, loop_count);
 			free(cmd_location);
 		}
 	}

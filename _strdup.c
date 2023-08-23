@@ -6,18 +6,14 @@
  * Return: character
 */
 
-char *_strdup(char *source)
+char *_strdup(const char *source)
 {
 	size_t len;
 	char *dup;
 
-	if (source == NULL)
-		return (NULL);
-
 	len = _strlen(source) + 1;
-	dup = (char *)malloc(len);
-	if (dup == NULL)
-		return (NULL);
-	_strcpy(dup, source);
+	dup = (char *)malloc(len * sizeof(char));
+	if (dup != NULL)
+		_strcpy(dup, source);
 	return (dup);
 }

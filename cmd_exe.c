@@ -3,10 +3,15 @@
 /**
  * cmd_exe - executes the command
  * @argv: argument vector
- * Return: void
+ * @lineptr: lineptr
+ * @lineptr_new: lineptr new
+ * @filename: filename
+ * @command: command
+ * @loop_count: loop count
+ * Return: integer
 */
 
-int cmd_exe(char **argv, char **env, char *lineptr,
+int cmd_exe(char **argv, char *lineptr,
 	char *lineptr_new, char *filename, char *command, int loop_count)
 {
 	pid_t pid;
@@ -23,7 +28,7 @@ int cmd_exe(char **argv, char **env, char *lineptr,
 		}
 		else if (pid == 0)
 		{
-			execve_num = execve(command, argv, env);
+			execve_num = execve(command, argv, environ);
 			if (execve_num == -1)
 			{
 				perror(filename);
@@ -40,6 +45,14 @@ int cmd_exe(char **argv, char **env, char *lineptr,
 	return (0);
 }
 
+/**
+ * memory_free - frees memory
+ * @lineptr: lineptr
+ * @lineptr_new: lineptr new
+ * @argv: argument vector
+ * Return: integer
+*/
+
 int memory_free(char *lineptr, char *lineptr_new, char **argv)
 {
 	free(argv);
@@ -49,10 +62,21 @@ int memory_free(char *lineptr, char *lineptr_new, char **argv)
 	return (0);
 }
 
-int get_path_error(char *filename, char **argv, char *lineptr_new, char *lineptr, int loop_count)
+/**
+ * get_path_error - gets path error
+ * @filename: filename
+ * @argv: argument vector
+ * @lineptr_new: lineptr new
+ * @lineptr: lineptr
+ * @loop_count: loop count
+ * Return: integer
+*/
+
+int get_path_error(char *filename, char **argv, char *lineptr_new,
+	char *lineptr, int loop_count)
 {
 	_printf("%s: %d: %s: not found\n", filename, loop_count, argv[0]);
-	if (issatty(STDIN_FILENO) == 0)
+	if (isatty(STDIN_FILENO) == 0)
 	{
 		memory_free(lineptr, lineptr_new, argv);
 		exit(127);

@@ -5,13 +5,13 @@
  * @argv: argument vector
  * Return: interger
 */
-int main(int argc, char **argv, char **env)
+int main(int argc, char **argv)
 {
 	char *filename = argv[0];
-	
+
 	if (argc == 1)
 	{
-		get_line(env, filename);
+		get_line(filename);
 	}
 	return (0);
 }

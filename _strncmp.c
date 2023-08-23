@@ -1,5 +1,13 @@
 #include "main.h"
 
+/**
+ * _strncmp - string n cmp
+ * @s1: s1
+ * @s2: s2
+ * @n: n
+ * Return: integer
+*/
+
 int _strncmp(const char *s1, const char *s2, size_t n)
 {
 	size_t i;
@@ -13,5 +21,5 @@ int _strncmp(const char *s1, const char *s2, size_t n)
 		s1++;
 		s2++;
 	}
-	return 0;
+	return (0);
 }

@@ -1,26 +1,30 @@
 #include "main.h"
 
-char *_getenv(const char *env_name, char **env)
+/**
+ * _getenv - gets environment
+ * @name: environment name
+ * Return: character
+*/
+
+char *_getenv(const char *name)
 {
-	int i;
-	char *var_name;
-	char *var_value;
-	size_t env_name_len;
+	char **env;
+	size_t name_length;
 
-	if (name == NULL || _strlen(name) == 0)
-		return NULL;
-
-	for (i = 0; env[i] != NULL; i++)
+	if (name == NULL || name[0] == '\0')
 	{
-		var_name = env[i];
-		var_value = _strchr(var_name, '=');
-		env_name_len = var_value - var_name;
-		if (var_name != NULL)
+		return (NULL);
+	}
+
+	name_length = strlen(name);
+
+	for (env = environ; *env != NULL; ++env)
+	{
+		if (strncmp(*env, name, name_length) == 0 && (*env)[name_length] == '=')
 		{
-			if (env_name_len == _strlen(var_name) && _strncmp(var_name, env_name, env_name_len) == 0)
-				return var_value + 1;
+		return (*env + name_length + 1);
 		}
 	}
 
-	return NULL;
+	return (NULL);
 }

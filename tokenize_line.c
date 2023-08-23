@@ -3,7 +3,8 @@
 /**
  * tokenize_line - tokenizes line
  * @lineptr: lineptr
- * @lineptr_nem: lineptr new
+ * @lineptr_new: lineptr new
+ * @argv: argument vector
  * Return: integer
 */
 

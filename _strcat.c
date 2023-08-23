@@ -7,17 +7,20 @@
  * Return: void
 */
 
-void _strcat(char *destination, const char *source)
+char *_strcat(char *destination, const char *source)
 {
-	while (*destination != '\0')
+	char *ptr = destination;
+
+	while (*ptr != '\0')
 	{
-		destination++;
+		ptr++;
 	}
 	while (*source != '\0')
 	{
-		*destination = *source;
-		destination++;
+		*ptr = *source;
+		ptr++;
 		source++;
 	}
-	*destination = '\0';
+	*ptr = '\0';
+	return (destination);
 }

@@ -10,6 +10,8 @@
 #include <sys/wait.h>
 #include <stdarg.h>
 
+extern char **environ;
+
 /**
  * struct format_spec - Format Specifiers
  * @symbol: symbol to format
@@ -34,23 +36,28 @@ void _dec(va_list args, int *count);
 void _int(va_list args, int *count);
 
 
-int cmd_exe(char **argv, char **env, char *lineptr,
+int cmd_exe(char **argv, char *lineptr,
 char *lineptr_new, char *filename, char *command, int loop_count);
-int get_path(char **cmd_location, char **argv, char *lineptr_new, char *lineptr);
-void _strcpy(char *destination, char *source);
+int get_path(char **cmd_location, char **argv,
+char *lineptr_new, char *lineptr, char *filename, int loop_count);
+char *_strcpy(char *destination, const char *source);
 size_t _strlen(const char *s);
-void _strcat(char *destination, const char *source);
-char *_strdup(char *source);
+char *_strcat(char *destination, const char *source);
+char *_strdup(const char *source);
 int check_getline(char *lineptr, size_t buff_size);
-int get_line(char **env, char *filename);
-int process_line(char *lineptr, char **argv, char **env, char *filename);
+int get_line(char *filename);
+int process_line(char *lineptr, char **argv,
+char *filename, char *cmd_location, int loop_count);
 int check_white_space(const char *lineptr);
 int tokenize_line(char *lineptr, char *lineptr_new, char ***argv);
 int _isspace(int digit);
 int memory_free(char *lineptr, char *lineptr_new, char **argv);
-int get_path_error(char *filename, char **argv, char *lineptr_new, char *lineptr, int loop_count);
+int get_path_error(char *filename, char **argv,
+char *lineptr_new, char *lineptr, int loop_count);
 int _strncmp(const char *s1, const char *s2, size_t n);
-char *_getenv(const char *env_name, char **env);
+char *_getenv(const char *env_name);
+char *_strchr(const char *s, int c);
+int print_environ(void);
 
 
 #endif

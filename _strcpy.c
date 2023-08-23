@@ -7,12 +7,16 @@
  * Return: void
 */
 
-void _strcpy(char *destination, char *source)
+char *_strcpy(char *destination, const char *source)
 {
+	char *ptr = destination;
+
 	while (*source != '\0')
 	{
-		*destination = *source;
-		destination++;
+		*ptr = *source;
+		ptr++;
 		source++;
 	}
+	*ptr = '\0';
+	return (destination);
 }
