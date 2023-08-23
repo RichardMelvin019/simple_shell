@@ -7,12 +7,12 @@
  * @filename: filename
  * @cmd_location: command location
  * @loop_count: loop count
+ * @lineptr_new: lineptr new
  * Return: integer
 */
 int process_line(char *lineptr, char **argv,
-	char *filename, char *cmd_location, int loop_count)
+	char *filename, char *cmd_location, int loop_count, char *lineptr_new)
 {
-	char *lineptr_new = NULL;
 	int count_token = 0;
 
 	if (check_white_space(lineptr) == 1)
@@ -51,7 +51,7 @@ int check_white_space(const char *lineptr)
 {
 	while (*lineptr)
 	{
-		if (_isspace(*lineptr) != 0)
+		if (!_isspace(*lineptr))
 			return (0);
 		lineptr++;
 	}

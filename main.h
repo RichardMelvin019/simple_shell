@@ -44,10 +44,11 @@ char *_strcpy(char *destination, const char *source);
 size_t _strlen(const char *s);
 char *_strcat(char *destination, const char *source);
 char *_strdup(const char *source);
-int check_getline(char *lineptr, size_t buff_size);
+int check_getline(char *lineptr, size_t buff_size,
+char *lineptr_new, char **argv);
 int get_line(char *filename);
 int process_line(char *lineptr, char **argv,
-char *filename, char *cmd_location, int loop_count);
+char *filename, char *cmd_location, int loop_count, char *lineptr_new);
 int check_white_space(const char *lineptr);
 int tokenize_line(char *lineptr, char *lineptr_new, char ***argv);
 int _isspace(int digit);
